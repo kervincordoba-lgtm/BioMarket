@@ -95,7 +95,7 @@
             <h1 class="fw-bold mb-0">Productos relacionados</h1>
             <div class="vesitable">
                 <div class="owl-carousel vegetable-carousel justify-content-center">
-                    <div class="border border-primary rounded position-relative vesitable-item"
+                    <div class="border border-primary rounded position-relative vesitable-item related-product-card"
                         th:each="item: ${products}">
                         <div class="rounded position-relative fruite-item">
                             <div class="fruite-img">
@@ -105,11 +105,11 @@
                             </div>
                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                 style="top: 10px; left: 10px;" th:text="${item.category.name}">Categoria</div>
-                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom related-product-body">
                                 <h4 th:text="${item.name}">Producto</h4>
-                                <p class="product-description" th:text="${item.description}">Descripcion</p>
+                                <p class="product-description related-product-description" th:text="${item.description}">Descripcion</p>
                                 <form th:action="@{/cart/add/{id}(id=${item.idProduct})}" method="post"
-                                    class="product-actions product-card-actions">
+                                    class="product-actions product-card-actions related-product-actions">
                                     <p class="text-dark fs-5 fw-bold product-price" th:text="${'$' + item.price}">$0.00
                                     </p>
                                     <input type="hidden" name="quantity" value="1">
