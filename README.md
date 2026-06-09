@@ -6,8 +6,11 @@ Aplicacion web cliente-servidor desarrollada con Spring Boot, Spring Data JPA, M
 
 La documentacion Swagger/OpenAPI esta disponible cuando la aplicacion esta en ejecucion:
 
-- Swagger UI: http://localhost:8080/swagger-ui.html
-- OpenAPI JSON: http://localhost:8080/v3/api-docs
+- Swagger UI Local: http://localhost:8080/swagger-ui.html
+- OpenAPI JSON Local: http://localhost:8080/v3/api-docs
+- Swagger UI en linea: http://biomarket-production.up.railway.app/swagger-ui.html
+- OpenAPI JSON en Linea: http:/biomarket-production.up.railway.app/v3/api-docs
+
 
 Tambien se incluye una copia exportada en:
 
