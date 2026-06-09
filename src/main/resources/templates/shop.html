@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Fruitables - Vegetable Website Template</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link th:href="@{/lib/lightbox/css/lightbox.min.css}" rel="stylesheet">
+        <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link th:href="@{/css/style.css}" rel="stylesheet">
+    </head>
+
+    <body>
+        <div th:replace="~{fragments :: header('shop')}"></div>
+
+       
+
+        <!-- Fruits Shop Start-->
+        <div class="container-fluid fruite py-5">
+            <div class="container py-5">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                            <div class="col-xl-12">
+                                <form id="shopSearch" th:action="@{/shop}" method="get" class="shop-search">
+                                    <div class="shop-search-header">
+                                        <div>
+                                            <span class="shop-search-eyebrow">Buscar producto</span>
+                                            <p class="mb-0"><span th:text="${#lists.size(products)}">0</span> resultados encontrados</p>
+                                        </div>
+                                        <a th:if="${(productName != null and !productName.isBlank()) or selectedCategoryId != null}"
+                                           th:href="@{/shop}"
+                                           class="shop-search-clear">Limpiar</a>
+                                    </div>
+
+                                    <div class="shop-search-fields">
+                                        <div class="shop-search-input">
+                                            <i class="fas fa-search"></i>
+                                            <input type="search"
+                                                   id="productNameFilter"
+                                                   name="productName"
+                                                   class="form-control"
+                                                   placeholder="Nombre del producto"
+                                                   th:value="${productName}">
+                                        </div>
+
+                                        <select id="categoryIdFilter" name="categoryId" class="form-select">
+                                            <option value="">Todas las categorias</option>
+                                            <option th:each="category : ${categories}"
+                                                    th:value="${category.idCategory}"
+                                                    th:selected="${selectedCategoryId != null and selectedCategoryId == category.idCategory}"
+                                                    th:text="${category.name}">
+                                            </option>
+                                        </select>
+
+                                        <select id="sortFilter" name="sort" class="form-select">
+                                            <option value="">Sin ordenar</option>
+                                            <option value="name" th:selected="${sort == 'name'}">Nombre</option>
+                                            <option value="category" th:selected="${sort == 'category'}">Categoria</option>
+                                        </select>
+
+                                        <button type="submit" class="btn btn-primary text-white">
+                                            <i class="fas fa-search me-2"></i>Buscar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                        </div>
+                        <div class="row g-4">
+                   
+                            <div class="col-xl-12">
+                                <div class="row g-4 justify-content-center">
+                                    <div class="col-md-6 col-lg-6 col-xl-4" th:each="item : ${products}">
+                                        <div class="rounded position-relative fruite-item">
+                                            <div class="fruite-img">
+                                                <a th:href="@{/shop-detail/{id}(id=${item.idProduct})}"><img th:src="@{/img/{image}(image=${item.image})}" class="img-fluid w-100 rounded-top" th:alt="${item.image}" ></a>
+                                            </div>
+                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;" th:text="${item.category.name}">Category</div>
+                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                <h4 th:text="${item.name}">Product</h4>
+                                                <p class="product-description" th:text="${item.description}">Description</p>
+                                                <form th:action="@{/cart/add/{id}(id=${item.idProduct})}" method="post" class="product-actions product-card-actions">
+                                                    <p class="text-dark fs-5 fw-bold product-price" th:text="${'$' + item.price}">$0.00</p>
+                                                    <input type="hidden" name="quantity" value="1">
+                                                    <button type="submit" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Agregar al carrito
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${#lists.isEmpty(products)}" class="shop-empty text-center bg-light p-5">
+                                        <i class="fas fa-box-open text-secondary mb-3"></i>
+                                        <h3 class="h5 mb-2">No se encontraron productos</h3>
+                                        <p class="text-muted mb-0">Intenta buscar con otro nombre o categoria.</p>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fruits Shop End-->
+        <div th:replace="~{fragments :: footer}"></div>
+
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+        
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/lightbox/js/lightbox.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="/js/main.js"></script>
+    </body>
+
+</html>

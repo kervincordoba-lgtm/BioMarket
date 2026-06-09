@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title>BioMarket - Tienda ecológica</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar start -->
+    <div th:replace="~{fragments :: header('home')}"></div>
+
+    <!-- Navbar End -->
+
+
+    <!-- Modal Search Start -->
+
+    
+    <!-- Modal Search End -->
+
+
+    <!-- Hero Start -->
+    <div class="container-fluid py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center">
+                <div class="col-md-12 col-lg-7">
+                    <h4 class="mb-3 text-secondary">Productos para tu día a día</h4>
+                    <h1 class="mb-5 display-3 text-primary">BioMarket: cuidado, hogar, cocina y alimentos</h1>
+                    
+                </div>
+                <div class="col-md-12 col-lg-5">
+                    <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item active rounded">
+                                <img src="img/portada-limpieza-hogar.png" class="img-fluid w-100 bg-secondary rounded"
+                                    alt="Limpieza del hogar">
+                                <a href="#" class="btn px-4 py-2 text-white rounded">Limpieza del Hogar</a>
+                            </div>
+                            <div class="carousel-item rounded" >
+                                <img src="img/portada-alimentos1.png" class="img-fluid w-100 bg-secondary rounded" alt="Alimentos">
+                                <a href="#" class="btn px-4 py-2 text-white rounded">Alimentos</a>
+                            </div>
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselId"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselId"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero End -->
+
+
+    <!-- Featurs Section Start -->
+    <div class="container-fluid featurs py-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-car-side fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Envio gratis</h5>
+                            <p class="mb-0">Gratis en pedidos mayores a $300</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-user-shield fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Pago seguro</h5>
+                            <p class="mb-0">Compra con total confianza</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fas fa-exchange-alt fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>30 dias de devolucion</h5>
+                            <p class="mb-0">Garantia de devolucion</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="featurs-item text-center rounded bg-light p-4">
+                        <div class="featurs-icon btn-square rounded-circle bg-secondary mb-5 mx-auto">
+                            <i class="fa fa-phone-alt fa-3x text-white"></i>
+                        </div>
+                        <div class="featurs-content text-center">
+                            <h5>Soporte 24/7</h5>
+                            <p class="mb-0">Atencion rapida cuando la necesites</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Featurs Section End -->
+
+
+    <!-- Fruits Shop Start-->
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <div class="tab-class text-center">
+                <div class="row g-4">
+                    <div class="col-lg-4 text-start">
+                        <h1>Nuestros productos</h1>
+                    </div>
+                    <div class="col-lg-8 text-end">
+                        <ul class="nav nav-pills product-tabs d-inline-flex text-center mb-5">
+                            <li class="nav-item">
+                                <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill"
+                                    href="#tab-all">
+                                    <span class="text-dark product-tab-label">Todos</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item" th:each="category : ${categories}">
+                                <a class="d-flex m-2 py-2 bg-light rounded-pill" data-bs-toggle="pill"
+                                    th:attr="href=${'#tab-category-' + category.idCategory}">
+                                    <span class="text-dark product-tab-label"
+                                        th:text="${category.name}">Categoria</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div id="tab-all" class="tab-pane fade show p-0 active">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="row g-4">
+                                    <div th:if="${#lists.isEmpty(products)}"
+                                        class="col-12 shop-empty text-center bg-light p-5">
+                                        <i class="fas fa-box-open text-secondary mb-3"></i>
+                                        <h3 class="h5 mb-2">No se encontraron productos</h3>
+                                        <p class="text-muted mb-0">Intenta buscar con otro nombre o categoría.</p>
+                                    </div>
+
+                                    <div class="col-md-6 col-lg-4 col-xl-3 d-flex"
+                                        th:unless="${#lists.isEmpty(products)}" th:each="item : ${products}">
+                                        <div
+                                            class="rounded position-relative fruite-item product-card w-100 d-flex flex-column">
+                                            <div class="fruite-img">
+                                                <a th:href="@{/shop-detail/{id}(id=${item.idProduct})}">
+                                                    <img class="img-fluid w-100 rounded-top"
+                                                        th:if="${item.image != null and !item.image.isBlank()}"
+                                                        th:src="@{'/img/' + ${item.image}}" th:alt="${item.name}">
+                                                </a>
+                                                <div th:unless="${item.image != null and !item.image.isBlank()}"
+                                                    class="bg-light d-flex align-items-center justify-content-center rounded-top"
+                                                    style="height: 220px;">
+                                                    <i class="fas fa-image text-secondary fa-3x"></i>
+                                                </div>
+                                            </div>
+                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                style="top: 10px; left: 10px;"
+                                                th:text="${item.category != null ? item.category.name : 'Producto'}">
+                                                Producto</div>
+                                            <div
+                                                class="p-4 border border-secondary border-top-0 rounded-bottom product-card-body d-flex flex-column flex-grow-1">
+                                                <h4 th:text="${item.name}">Producto</h4>
+                                                <p class="product-description" th:text="${item.description}">Descripción
+                                                    del producto</p>
+                                                <div
+                                                    class="product-card-actions d-flex align-items-center justify-content-between flex-wrap mt-auto">
+                                                    <p class="text-dark fs-5 fw-bold mb-0">$<span
+                                                            th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA')}">0</span>
+                                                    </p>
+                                                    <form th:action="@{/cart/add/{id}(id=${item.idProduct})}"
+                                                        method="post">
+                                                        <button type="submit"
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Agregar al
+                                                            carrito
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade p-0" th:each="category : ${categories}"
+                        th:id="${'tab-category-' + category.idCategory}">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="row g-4">
+                                    <div th:if="${!categoryIdsWithProducts.contains(category.idCategory)}"
+                                        class="col-12 shop-empty text-center bg-light p-5">
+                                        <i class="fas fa-box-open text-secondary mb-3"></i>
+                                        <h3 class="h5 mb-2">No se encontraron productos</h3>
+                                        <p class="text-muted mb-0">No hay productos disponibles en esta categoría.</p>
+                                    </div>
+
+                                    <th:block th:each="item : ${products}">
+                                        <div class="col-md-6 col-lg-4 col-xl-3 d-flex"
+                                            th:if="${item.category != null and item.category.idCategory == category.idCategory}">
+                                            <div
+                                                class="rounded position-relative fruite-item product-card w-100 d-flex flex-column">
+                                                <div class="fruite-img">
+                                                    <a th:href="@{/shop-detail/{id}(id=${item.idProduct})}">
+                                                        <img class="img-fluid w-100 rounded-top"
+                                                            th:if="${item.image != null and !item.image.isBlank()}"
+                                                            th:src="@{'/img/' + ${item.image}}" th:alt="${item.name}">
+                                                    </a>
+                                                    <div th:unless="${item.image != null and !item.image.isBlank()}"
+                                                        class="bg-light d-flex align-items-center justify-content-center rounded-top"
+                                                        style="height: 220px;">
+                                                        <i class="fas fa-image text-secondary fa-3x"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                                    style="top: 10px; left: 10px;"
+                                                    th:text="${item.category != null ? item.category.name : 'Producto'}">
+                                                    Producto</div>
+                                                <div
+                                                    class="p-4 border border-secondary border-top-0 rounded-bottom product-card-body d-flex flex-column flex-grow-1">
+                                                    <h4 th:text="${item.name}">Producto</h4>
+                                                    <p class="product-description" th:text="${item.description}">
+                                                        Descripción del producto</p>
+                                                    <div
+                                                        class="product-card-actions d-flex align-items-center justify-content-between flex-wrap mt-auto">
+                                                        <p class="text-dark fs-5 fw-bold mb-0">$<span
+                                                                th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA')}">0</span>
+                                                        </p>
+                                                        <form th:action="@{/cart/add/{id}(id=${item.idProduct})}"
+                                                            method="post">
+                                                            <button type="submit"
+                                                                class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Agregar al
+                                                                carrito
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fruits Shop End-->
+
+
+    
+
+
+    <!-- Fact Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="bg-light p-5 rounded">
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="counter bg-white rounded p-5">
+                            <i class="fa fa-users text-secondary"></i>
+                            <h4>clientes satisfechos</h4>
+                            <h1>1963</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="counter bg-white rounded p-5">
+                            <i class="fa fa-users text-secondary"></i>
+                            <h4>calidad del servicio</h4>
+                            <h1>99%</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="counter bg-white rounded p-5">
+                            <i class="fa fa-users text-secondary"></i>
+                            <h4>certificados de calidad</h4>
+                            <h1>33</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xl-3">
+                        <div class="counter bg-white rounded p-5">
+                            <i class="fa fa-users text-secondary"></i>
+                            <h4>productos disponibles</h4>
+                            <h1>789</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fact Start -->
+
+
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+        <div class="container py-5">
+            <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <a href="#">
+                            <h1 class="text-primary mb-0">BioMarket</h1>
+                            <p class="text-secondary mb-0">Productos frescos</p>
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="position-relative mx-auto">
+                            <input class="form-control border-0 w-100 py-3 px-4 rounded-pill" type="email"
+                                placeholder="Tu correo">
+                            <button type="submit"
+                                class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white"
+                                style="top: 0; right: 0;">Suscribirse</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="d-flex justify-content-end pt-3">
+                            <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
+                                    class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i
+                                    class="fab fa-youtube"></i></a>
+                            <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="text-light mb-3">Por qué elegirnos</h4>
+                        <p class="mb-4">En BioMarket ofrecemos productos seleccionados para el cuidado del hogar, la cocina, la alimentación y tus mascotas.</p>
+                        <a href="" class="btn border-secondary py-2 px-4 rounded-pill text-primary">Leer más</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex flex-column text-start footer-item">
+                        <h4 class="text-light mb-3">Información</h4>
+                        <a class="btn-link" href="">Sobre nosotros</a>
+                        <a class="btn-link" href="">Contáctanos</a>
+                        <a class="btn-link" href="">Política de privacidad</a>
+                        <a class="btn-link" href="">Términos y condiciones</a>
+                        <a class="btn-link" href="">Política de devoluciones</a>
+                        <a class="btn-link" href="">Preguntas frecuentes</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="d-flex flex-column text-start footer-item">
+                        <h4 class="text-light mb-3">Cuenta</h4>
+                        <a class="btn-link" href="">Mi cuenta</a>
+                        <a class="btn-link" href="">Detalle de producto</a>
+                        <a class="btn-link" href="">Carrito de compras</a>
+                        <a class="btn-link" href="">Lista de deseos</a>
+                        <a class="btn-link" href="">Historial de pedidos</a>
+                        <a class="btn-link" href="">Pedidos internacionales</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="text-light mb-3">Contacto</h4>
+                        <p>Dirección: Calle 67 #53 - 108, Medellín</p>
+                        <p>Correo: kervin.cordoba@udea.edu.co</p>
+                        <p>Teléfono: (+57) 3209716191</p>
+                        <p>Pagos aceptados</p>
+                        <img src="img/payment.png" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
+            class="fa fa-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
