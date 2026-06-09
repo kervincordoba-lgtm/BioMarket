@@ -13,11 +13,20 @@ Tambien se incluye una copia exportada en:
 
 - `docs/api/openapi.json`
 
-## Manual de usuario
+## Manual e Historia de usuario
 
 - Video explicativo: https://youtu.be/hAC5oDGMVIo
 - Manual de usuario: `docs/user-manual.md`
+- Historia de usuario: `docs/Historias de usuario.docx`
+  
+## Descripcion de la solucion
 
+- Descripcion tecnica : `docs/Descripción técnica de la solución.docx`
+
+# Diagrama
+
+- Diagrama: `docs/diagrams/Diagrama.png`
+  
 ## Modulos principales
 
 - CRUD de productos e inventario.
