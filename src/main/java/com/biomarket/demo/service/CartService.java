@@ -47,7 +47,7 @@ public class CartService {
                 throw new IllegalArgumentException("No puedes agregar más de este producto. Stock límite alcanzado.");
             }
         } else {
-            // 3. Si es null, el producto no estaba en el carrito. Lo buscamos en la BD y lo agregamos.
+            // 3. Si es null, el producto no estaba en el carrito, lo buscamos en la BD y lo agregamos.
             Product product = productRepository.findById(productId)
                     .orElseThrow(() -> new IllegalArgumentException("Producto no encontrado."));
 
@@ -68,7 +68,6 @@ public class CartService {
     }
 
     public void increaseProduct(List<CartItem> cart, Integer productId) {
-        // Lógica para el botón "+" sin streams
         CartItem existingItem = null;
         for (CartItem item : cart) {
             if (item.getProductId().equals(productId)) {

@@ -39,12 +39,11 @@
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
     <!-- Spinner End -->
-        <div th:replace="~{fragments :: header('shop')}"></div>
+    <div th:replace="~{fragments :: header('shop')}"></div>
 
-
-    
-
-   
+    <br>
+    <br>
+    <br>
 
     <!-- Single Product Start -->
     <div class="container-fluid py-5 mt-5">
@@ -55,22 +54,19 @@
                         <div class="col-lg-6">
                             <div class="border rounded">
                                 <a href="#">
-                                    <img th:src="@{'/img/' + ${product.image}}" class="img-fluid rounded" alt="Imagen del producto">
+                                    <img th:src="@{'/img/' + ${product.image}}" class="img-fluid rounded"
+                                        alt="Imagen del producto">
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <h4 class="fw-bold mb-3" th:text="${product.name}">Brocoli</h4>
                             <p class="mb-3" th:text="'Categoria: '+${product.category.name}">Categoria: Producto</p>
-                            <form th:action="@{/cart/add/{id}(id=${product.idProduct})}" method="post" class="product-actions product-detail-actions">
+                            <form th:action="@{/cart/add/{id}(id=${product.idProduct})}" method="post"
+                                class="product-actions product-detail-actions">
                                 <h5 class="fw-bold product-price" th:text="${product.price}+' $'">3,35 $</h5>
-                                <input type="number"
-                                    name="quantity"
-                                    class="form-control product-quantity-input"
-                                    min="1"
-                                    th:max="${product.stock}"
-                                    value="1"
-                                    aria-label="Cantidad">
+                                <input type="number" name="quantity" class="form-control product-quantity-input" min="1"
+                                    th:max="${product.stock}" value="1" aria-label="Cantidad">
                                 <button type="submit"
                                     class="btn border border-secondary rounded-pill px-3 text-primary">
                                     <i class="fa fa-shopping-bag me-2 text-primary"></i> Agregar al carrito
@@ -90,17 +86,11 @@
                                 <div class="tab-pane active" id="nav-about" role="tabpanel"
                                     aria-labelledby="nav-about-tab">
                                     <p th:text="${product.description}">Descripcion del producto.</p>
-
-
                                 </div>
-
-
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
             <h1 class="fw-bold mb-0">Productos relacionados</h1>
             <div class="vesitable">
@@ -118,8 +108,10 @@
                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                 <h4 th:text="${item.name}">Producto</h4>
                                 <p class="product-description" th:text="${item.description}">Descripcion</p>
-                                <form th:action="@{/cart/add/{id}(id=${item.idProduct})}" method="post" class="product-actions product-card-actions">
-                                    <p class="text-dark fs-5 fw-bold product-price" th:text="${'$' + item.price}">$0.00</p>
+                                <form th:action="@{/cart/add/{id}(id=${item.idProduct})}" method="post"
+                                    class="product-actions product-card-actions">
+                                    <p class="text-dark fs-5 fw-bold product-price" th:text="${'$' + item.price}">$0.00
+                                    </p>
                                     <input type="hidden" name="quantity" value="1">
                                     <button type="submit"
                                         class="btn border border-secondary rounded-pill px-3 text-primary">
@@ -129,13 +121,13 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
     <!-- Single Product End -->
-        <div th:replace="~{fragments :: footer}"></div>
+    <div th:replace="~{fragments :: footer}"></div>
 
 
 

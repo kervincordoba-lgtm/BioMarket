@@ -116,8 +116,15 @@ public class ProductDashboardController {
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
-        productService.deleteById(id);
-        redirectAttributes.addFlashAttribute("message", "Producto eliminado correctamente.");
+        boolean deleted = productService.deleteById(id);
+
+        if (deleted) {
+            redirectAttributes.addFlashAttribute("message", "Producto eliminado correctamente.");
+        } else {
+            redirectAttributes.addFlashAttribute("error",
+                    "No se puede eliminar el producto porque ya esta asociado a uno o mas pedidos.");
+        }
+
         return "redirect:/dashboard/products";
     }
 

@@ -14,6 +14,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +53,11 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "id_category", nullable = false)
+    @JsonIgnore
     private Category category;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
     public Product() {
@@ -112,6 +117,28 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @JsonProperty("categoryId")
+    public Integer getCategoryId() {
+        return category != null ? category.getIdCategory() : null;
+    }
+
+    @JsonProperty("categoryId")
+    public void setCategoryId(Integer categoryId) {
+        if (categoryId == null) {
+            this.category = null;
+            return;
+        }
+
+        Category requestCategory = new Category();
+        requestCategory.setIdCategory(categoryId);
+        this.category = requestCategory;
+    }
+
+    @JsonProperty("categoryName")
+    public String getCategoryName() {
+        return category != null ? category.getName() : null;
     }
 
     public List<OrderDetail> getOrderDetails() {

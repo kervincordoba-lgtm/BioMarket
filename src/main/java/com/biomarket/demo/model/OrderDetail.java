@@ -9,6 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.math.BigDecimal;
 
 @Entity
@@ -28,10 +31,12 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "id_product", nullable = false)
+    @JsonIgnore
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "id_order", nullable = false)
+    @JsonIgnore
     private Order order;
 
     public OrderDetail() {
@@ -67,6 +72,16 @@ public class OrderDetail {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @JsonProperty("productId")
+    public Integer getProductId() {
+        return product != null ? product.getIdProduct() : null;
+    }
+
+    @JsonProperty("productName")
+    public String getProductName() {
+        return product != null ? product.getName() : null;
     }
 
     public Order getOrder() {

@@ -11,8 +11,10 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.biomarket.demo.model.Product;
+import com.biomarket.demo.repository.OrderDetailRepository;
 import com.biomarket.demo.repository.ProductRepository;
 
 @Service
@@ -21,9 +23,11 @@ public class ProductService {
     private static final String IMAGE_DIRECTORY = "src/main/resources/static/img";
 
     private final ProductRepository productRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, OrderDetailRepository orderDetailRepository) {
         this.productRepository = productRepository;
+        this.orderDetailRepository = orderDetailRepository;
     }
 
     public List<Product> findAll() {
@@ -37,10 +41,12 @@ public class ProductService {
     public List<Product> findAllByCategory(Integer id) {
         return productRepository.findByCategory_IdCategory(id);
     }
+
     public List<Product> findAllByCategoryWithStock(Integer id) {
         return productRepository.findByCategory_IdCategoryWithStock(id);
     }
 
+    // Sobrecarga
     public List<Product> search(String productName, Integer categoryId) {
         return search(productName, categoryId, null);
     }
@@ -61,7 +67,7 @@ public class ProductService {
             products = findAll();
         }
 
-        return sortProducts(products, sort);
+        return this.sortProducts(products, sort);
     }
 
     public List<Product> searchWithStock(String productName, Integer categoryId) {
@@ -74,7 +80,8 @@ public class ProductService {
         List<Product> products;
 
         if (hasProductName && hasCategory) {
-            products = productRepository.findByNameContainingIgnoreCaseAndCategory_IdCategoryWhithStock(productName.trim(),
+            products = productRepository.findByNameContainingIgnoreCaseAndCategory_IdCategoryWhithStock(
+                    productName.trim(),
                     categoryId);
         } else if (hasProductName) {
             products = productRepository.findByNameContainingIgnoreCaseWithStock(productName.trim());
@@ -84,7 +91,7 @@ public class ProductService {
             products = findAllWithStock();
         }
 
-        return sortProducts(products, sort);
+        return this.sortProducts(products, sort);
     }
 
     public Optional<Product> findById(Integer id) {
@@ -135,8 +142,17 @@ public class ProductService {
         return null;
     }
 
-    public void deleteById(Integer id) {
-        productRepository.deleteById(id);
+    public boolean deleteById(Integer id) {
+        if (orderDetailRepository.existsByProduct_IdProduct(id)) {
+            return false;
+        }
+
+        try {
+            productRepository.deleteById(id);
+            return true;
+        } catch (DataIntegrityViolationException exception) {
+            return false;
+        }
     }
 
     private void updateProductData(Product product, Product productData) {
@@ -180,8 +196,7 @@ public class ProductService {
         Comparator<Product> comparator = switch (sort == null ? "" : sort) {
             case "name" -> Comparator.comparing(Product::getName,
                     Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
-            case "category" -> Comparator.comparing(
-                    product -> product.getCategory() != null ? product.getCategory().getName() : null,
+            case "category" -> Comparator.comparing(this::getCategoryName,
                     Comparator.nullsLast(String.CASE_INSENSITIVE_ORDER));
             default -> null;
         };
@@ -193,5 +208,9 @@ public class ProductService {
         return products.stream()
                 .sorted(comparator)
                 .toList();
+    }
+
+    private String getCategoryName(Product product) {
+        return product.getCategory() != null ? product.getCategory().getName() : null;
     }
 }

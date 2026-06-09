@@ -1,7 +1,5 @@
 package com.biomarket.demo.controller.api;
 
-import com.biomarket.demo.dto.ProductRequest;
-import com.biomarket.demo.dto.ProductResponse;
 import com.biomarket.demo.model.Category;
 import com.biomarket.demo.model.Product;
 import com.biomarket.demo.service.CategoryService;
@@ -40,37 +38,34 @@ public class ProductApiController {
 
     @GetMapping
     @Operation(summary = "Listar productos", description = "Lista productos con filtros opcionales por nombre, categoria y orden.")
-    public List<ProductResponse> listProducts(
+    public List<Product> listProducts(
             @Parameter(description = "Texto para buscar por nombre del producto")
             @RequestParam(required = false) String productName,
             @Parameter(description = "Identificador de la categoria")
             @RequestParam(required = false) Integer categoryId,
             @Parameter(description = "Criterio de orden: name o category")
             @RequestParam(required = false) String sort) {
-        return productService.search(productName, categoryId, sort).stream()
-                .map(ProductResponse::from)
-                .toList();
+        return productService.search(productName, categoryId, sort);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Consultar producto", description = "Obtiene un producto por su identificador.")
-    public ProductResponse getProduct(@PathVariable Integer id) {
+    public Product getProduct(@PathVariable Integer id) {
         return productService.findById(id)
-                .map(ProductResponse::from)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado."));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Crear producto", description = "Registra un producto nuevo desde datos JSON.")
-    public ProductResponse createProduct(@Valid @RequestBody ProductRequest request) {
+    public Product createProduct(@Valid @RequestBody Product request) {
         Product product = toProduct(request);
-        return ProductResponse.from(productService.save(product));
+        return productService.save(product);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar producto", description = "Actualiza los datos principales de un producto.")
-    public ProductResponse updateProduct(@PathVariable Integer id, @Valid @RequestBody ProductRequest request) {
+    public Product updateProduct(@PathVariable Integer id, @Valid @RequestBody Product request) {
         Product productData = toProduct(request);
         Product updatedProduct = productService.update(id, productData);
 
@@ -78,7 +73,7 @@ public class ProductApiController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado.");
         }
 
-        return ProductResponse.from(updatedProduct);
+        return updatedProduct;
     }
 
     @DeleteMapping("/{id}")
@@ -89,19 +84,30 @@ public class ProductApiController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado.");
         }
 
-        productService.deleteById(id);
+        boolean deleted = productService.deleteById(id);
+
+        if (!deleted) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "No se puede eliminar el producto porque ya esta asociado a uno o mas pedidos.");
+        }
     }
 
-    private Product toProduct(ProductRequest request) {
-        Category category = categoryService.findById(request.categoryId())
+    private Product toProduct(Product request) {
+        Integer categoryId = request.getCategoryId();
+
+        if (categoryId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La categoria es obligatoria.");
+        }
+
+        Category category = categoryService.findById(categoryId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria no encontrada."));
 
         Product product = new Product();
-        product.setName(request.name());
-        product.setDescription(request.description());
-        product.setPrice(request.price());
-        product.setStock(request.stock());
-        product.setImage(request.image());
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
+        product.setImage(request.getImage());
         product.setCategory(category);
         return product;
     }

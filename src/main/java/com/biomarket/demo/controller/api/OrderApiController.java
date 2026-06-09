@@ -1,13 +1,9 @@
 package com.biomarket.demo.controller.api;
 
-import com.biomarket.demo.dto.OrderResponse;
-import com.biomarket.demo.dto.OrderStatusRequest;
-import com.biomarket.demo.model.Order;
-import com.biomarket.demo.service.OrderService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
+import com.biomarket.demo.model.Order;
+import com.biomarket.demo.service.OrderService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -36,7 +35,7 @@ public class OrderApiController {
 
     @GetMapping
     @Operation(summary = "Listar pedidos", description = "Lista pedidos registrados con filtros opcionales por estado, email y rango de fechas.")
-    public List<OrderResponse> listOrders(
+    public List<Order> listOrders(
             @Parameter(description = "Estado exacto del pedido")
             @RequestParam(required = false) String status,
             @Parameter(description = "Texto contenido en el email del cliente")
@@ -45,28 +44,30 @@ public class OrderApiController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fromDate,
             @Parameter(description = "Fecha final del filtro")
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate toDate) {
-        return orderService.findAll().stream()
+        return orderService.findAll()
+                .stream()
                 .filter(order -> matchesStatus(order, status))
                 .filter(order -> matchesEmail(order, email))
                 .filter(order -> matchesDateRange(order, fromDate, toDate))
                 .sorted(Comparator.comparing(Order::getOrderDate, Comparator.nullsLast(Comparator.naturalOrder()))
                         .reversed())
-                .map(OrderResponse::from)
                 .toList();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Consultar pedido", description = "Obtiene un pedido con cliente y detalles.")
-    public OrderResponse getOrder(@PathVariable Integer id) {
-        return orderService.findByIdWithDetails(id)
-                .map(OrderResponse::from)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado."));
+    public Order getOrder(@PathVariable Integer id) {
+        return orderService.findByIdWithDetails(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado."));
     }
 
     @PatchMapping("/{id}/status")
     @Operation(summary = "Actualizar estado del pedido", description = "Cambia el estado administrativo de un pedido.")
-    public OrderResponse updateStatus(@PathVariable Integer id, @Valid @RequestBody OrderStatusRequest request) {
-        boolean updated = orderService.updateStatus(id, request.status());
+    public Order updateStatus(@PathVariable Integer id, @RequestBody Order request) {
+        if (request.getStatus() == null || request.getStatus().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El estado del pedido es obligatorio.");
+        }
+
+        boolean updated = orderService.updateStatus(id, request.getStatus());
 
         if (!updated) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado.");
